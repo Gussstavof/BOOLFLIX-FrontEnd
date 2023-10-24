@@ -5,12 +5,10 @@ import {SignupComponent} from "./signup/signup.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "./auth.service";
 
-
-
 @NgModule({
   declarations: [
     SigninComponent,
-    SignupComponent
+    SignupComponent,
   ],
   imports: [
     CommonModule,

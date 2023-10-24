@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -6,5 +7,26 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.checkHeaderComponent();
+      }
+    });
+  }
+
+  currentHeaderComponent: any;
+
+  checkHeaderComponent() {
+    const routeData = this.getChildRouteData(this.activatedRoute);
+    this.currentHeaderComponent = routeData.headerComponent;
+  }
+
+  getChildRouteData(route: ActivatedRoute): any {
+    if (route.firstChild) {
+      return this.getChildRouteData(route.firstChild);
+    }
+    return route.snapshot.data;
+  }
 
 }

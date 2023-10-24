@@ -5,16 +5,15 @@ import {HttpClientModule} from "@angular/common/http";
 
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import {AuthModule} from "./auth/auth.module";
+import {HeaderModule} from "./header/header.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     FooterComponent,
   ],
   imports: [
@@ -22,9 +21,11 @@ import {AuthModule} from "./auth/auth.module";
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    AuthModule
+    AuthModule,
+    HeaderModule,
   ],
   providers: [],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
