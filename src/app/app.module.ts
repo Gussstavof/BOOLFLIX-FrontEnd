@@ -22,10 +22,12 @@ import {HeaderModule} from "./header/header.module";
     HttpClientModule,
     AppRoutingModule,
     AuthModule,
-    HeaderModule,
+    HeaderModule
   ],
   providers: [],
   exports: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

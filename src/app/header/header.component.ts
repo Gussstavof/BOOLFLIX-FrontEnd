@@ -7,6 +7,8 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  currentHeaderComponent: any;
+
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -14,8 +16,6 @@ export class HeaderComponent {
       }
     });
   }
-
-  currentHeaderComponent: any;
 
   checkHeaderComponent() {
     const routeData = this.getChildRouteData(this.activatedRoute);
@@ -28,5 +28,4 @@ export class HeaderComponent {
     }
     return route.snapshot.data;
   }
-
 }

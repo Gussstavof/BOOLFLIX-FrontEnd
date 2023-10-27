@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {User} from "../../models/User";
 import {AuthService} from "../auth.service";
@@ -11,7 +11,8 @@ import {AuthService} from "../auth.service";
 export class SigninComponent {
   constructor(
     private authService: AuthService
-  ) {}
+  ) {
+  }
 
   signInForm: FormGroup = new FormGroup({
     email: new FormControl(''),
@@ -19,15 +20,21 @@ export class SigninComponent {
   });
 
   onSubmit() {
-    let form = this.signInForm.value;
+    let form: FormGroup = this.signInForm.value
 
-    this.authService.createSignIn(new User(form))
+    this.authService.createSignIn(this.userFactory(form))
       .subscribe(
         data =>
           console.log(data),
         error => console.log(error)
       )
-
     console.warn(this.signInForm.value);
+  }
+
+  private userFactory(form: FormGroup): User {
+    return {
+      email: form.value.email,
+      password: form.value.password
+    }
   }
 }
