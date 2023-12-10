@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {User} from "../../models/User";
 import {AuthService} from "../auth.service";
 
 @Component({
@@ -21,23 +20,18 @@ export class SignupComponent {
   });
 
   onSubmit() {
-    let form: FormGroup = this.signupForm.value;
+    let form: any = this.signupForm.value;
 
-    this.authService.createSignup(this.userFactory(form))
+    this.authService.createSignup({
+      username: form.username,
+      email: form.email,
+      password: form.password
+    })
       .subscribe(
         data =>
           console.log(data),
         error => console.log(error)
       )
-
     console.warn(form);
-  }
-
-  private userFactory(form: FormGroup): User {
-    return {
-      username: form.value.username,
-      email: form.value.email,
-      password: form.value.password
-    }
   }
 }

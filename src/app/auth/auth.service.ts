@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 })
 export class AuthService {
 
-  private url = "http://localhost:8080/authentication"
+  private URL = "http://localhost:8080/authentication"
 
   constructor(private httpClient: HttpClient) {
   }
@@ -18,24 +18,19 @@ export class AuthService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:4000',
-        'Access-Control-Allow-Credentials': 'true'
       })
-
     };
 
-    return this.httpClient.post<User>(this.url, user, httpOptions)
+    return this.httpClient.post<User>(this.URL, user, httpOptions)
   }
 
   createSignup(user: User): Observable<User>{
 
-    const url = this.url + "/signup";
+    const url = this.URL + "/signup";
 
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:4000',
-        'Access-Control-Allow-Credentials': 'true'
       })
     };
 

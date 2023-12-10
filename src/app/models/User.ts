@@ -1,5 +1,7 @@
+import {AbstractControl} from "@angular/forms";
+
 export interface User {
-  username?: string
-  email: string
-  password: string
+  username?: AbstractControl<String>;
+  email: AbstractControl<String>;
+  password: AbstractControl<String>;
 }

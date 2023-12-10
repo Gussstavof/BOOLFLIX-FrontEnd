@@ -6,7 +6,7 @@ import {AuthHeaderComponent} from "./header/auth-header/auth-header.component";
 
 const routes: Routes = [
   {
-    path: 'sign-in',
+    path: '',
     component: SigninComponent,
     data: {
       headerComponent: AuthHeaderComponent

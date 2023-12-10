@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {User} from "../../models/User";
 import {AuthService} from "../auth.service";
 
 @Component({
@@ -20,21 +19,17 @@ export class SigninComponent {
   });
 
   onSubmit() {
-    let form: FormGroup = this.signInForm.value
+    let form: any = this.signInForm.value
 
-    this.authService.createSignIn(this.userFactory(form))
+    this.authService.createSignIn({
+        email: form.email,
+        password: form.password
+      })
       .subscribe(
         data =>
           console.log(data),
         error => console.log(error)
       )
     console.warn(this.signInForm.value);
-  }
-
-  private userFactory(form: FormGroup): User {
-    return {
-      email: form.value.email,
-      password: form.value.password
-    }
   }
 }
