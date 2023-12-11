@@ -10,8 +10,7 @@ import {AuthService} from "../auth.service";
 export class SigninComponent {
   constructor(
     private authService: AuthService
-  ) {
-  }
+  ) {}
 
   signInForm: FormGroup = new FormGroup({
     email: new FormControl(''),
