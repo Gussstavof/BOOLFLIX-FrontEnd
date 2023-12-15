@@ -4,8 +4,6 @@ import {HeaderComponent} from "./header.component";
 import {RouterOutlet} from "@angular/router";
 import {AuthHeaderComponent} from "./auth-header/auth-header.component";
 
-
-
 @NgModule({
   declarations: [
     HeaderComponent,

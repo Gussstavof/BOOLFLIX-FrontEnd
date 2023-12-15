@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {AuthService} from "../auth.service";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
   selector: 'app-signin',

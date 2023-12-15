@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {SigninComponent} from "./signin/signin.component";
 import {SignupComponent} from "./signup/signup.component";
 import {ReactiveFormsModule} from "@angular/forms";
-import {AuthService} from "./auth.service";
+import {ServiceModule} from "../services/service.module";
 
 @NgModule({
   declarations: [
@@ -13,13 +13,11 @@ import {AuthService} from "./auth.service";
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    ServiceModule
   ],
   exports: [
     SignupComponent,
     SigninComponent
   ],
-  providers: [
-    AuthService
-  ]
 })
 export class AuthModule { }
