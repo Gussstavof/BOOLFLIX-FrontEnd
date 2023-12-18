@@ -7,7 +7,7 @@ import {HomeComponent} from "./home/home.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'signin',
     component: SigninComponent,
     data: {
       headerComponent: AuthHeaderComponent
@@ -19,6 +19,11 @@ const routes: Routes = [
     data: {
       headerComponent: AuthHeaderComponent
     }
+  },
+  {
+    path: '',
+    redirectTo: '/signin',
+    pathMatch: 'full'
   },
   {
     path: 'home',
