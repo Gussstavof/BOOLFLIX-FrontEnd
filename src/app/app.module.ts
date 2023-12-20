@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-
 
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
@@ -17,6 +15,9 @@ import {MatSelectModule} from "@angular/material/select";
 import { VideosComponent } from './home/videos/videos.component';
 import {FlexModule} from "@angular/flex-layout";
 import {MatCardModule} from "@angular/material/card";
+import {ServiceModule} from "./services/service.module";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {MatCardModule} from "@angular/material/card";
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    ServiceModule,
     AppRoutingModule,
     AuthModule,
     HeaderModule,
@@ -37,9 +39,15 @@ import {MatCardModule} from "@angular/material/card";
     MatInputModule,
     MatSelectModule,
     FlexModule,
-    MatCardModule
+    MatCardModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+  ],
   exports: [],
   bootstrap: [
     AppComponent

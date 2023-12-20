@@ -20,11 +20,10 @@ export class CategoryService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getAllCategories(token: string) : Observable<PageableModel> {
+  getAllCategories() : Observable<PageableModel> {
     const httpOptions: { headers: HttpHeaders } = {
       headers: new HttpHeaders({
         'accept': '*/*',
-        'Authorization': 'Bearer ' + token
       })
     }
 

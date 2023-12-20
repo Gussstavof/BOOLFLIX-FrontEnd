@@ -9,9 +9,7 @@ import {CategoryService} from "../../services/category/category.service";
 })
 export class FilterComponent implements OnInit{
   selected = '';
-
   categories?: CategoryModel[];
-  token = '';
 
   constructor(private service: CategoryService) {
   }
@@ -21,7 +19,7 @@ export class FilterComponent implements OnInit{
   }
 
   getAllCategories() {
-    this.service.getAllCategories(this.token).subscribe(data => {
+    this.service.getAllCategories().subscribe(data => {
       this.categories = data.content
       this.categories.forEach(category => {
         console.log(category)

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {UserModel} from "../../models/user.model";
 import {Observable} from "rxjs";
+import {TokenModel} from "../../models/token.model";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +17,30 @@ export class AuthService {
       'Content-Type': 'application/json',
     })
   };
+
   constructor(private httpClient: HttpClient) {
   }
 
-  createSignIn(user: UserModel): Observable<UserModel> {
-    return this.httpClient.post<UserModel>(this.URL, user, this.httpOptions)
-  }
+  createSignIn(user: UserModel): Observable<HttpResponse<TokenModel>> {
+     return this.httpClient.post<TokenModel>(
+        this.URL,
+        user,
+       {
+         ...this.httpOptions,
+         observe: 'response'
+       }
+      )
 
-  createSignup(user: UserModel): Observable<UserModel>{
+  }
+  createSignup(user: UserModel): Observable<HttpResponse<TokenModel>> {
     const url = this.URL + "/signup";
-    return this.httpClient.post<UserModel>(url, user, this.httpOptions)
+    return this.httpClient.post<TokenModel>(
+      url,
+      user,
+      {
+        ...this.httpOptions,
+        observe: 'response'
+      }
+    );
   }
 }

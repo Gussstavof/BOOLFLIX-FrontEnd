@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {AuthService} from "../../services/auth/auth.service";
+import {Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-signup',
@@ -9,9 +10,9 @@ import {AuthService} from "../../services/auth/auth.service";
 })
 export class SignupComponent {
   constructor(
-    private authService: AuthService
-  ) {
-  }
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   signupForm: FormGroup = new FormGroup({
     username: new FormControl(''),
@@ -26,12 +27,12 @@ export class SignupComponent {
       username: form.username,
       email: form.email,
       password: form.password
-    })
-      .subscribe(
-        data =>
-          console.log(data),
-        error => console.log(error)
-      )
-    console.warn(form);
+    }).subscribe(async res => {
+      console.log(res)
+      if (res.status === 201 && res.body) {
+        sessionStorage.setItem('token', res.body.token);
+        await this.router.navigateByUrl('home');
+      }
+    });
   }
 }
