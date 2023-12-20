@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CategoryModel} from "../../models/category.model";
-import {CategoryService} from "../../services/category/category.service";
+import {CategoryModel} from "../../../models/category.model";
+import {CategoryService} from "../../../services/category/category.service";
 
 @Component({
   selector: 'app-filter',
