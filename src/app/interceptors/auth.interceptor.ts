@@ -11,11 +11,11 @@ import { Observable } from 'rxjs';
 export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.includes('signup') || req.url.includes('signin')) {
+    if (req.url.includes('authentication')) {
       return next.handle(req);
     }
 
-    let token = sessionStorage.getItem('token')
+    const token = sessionStorage.getItem('token');
 
     const cloneReq = req.clone({
       setHeaders:{
