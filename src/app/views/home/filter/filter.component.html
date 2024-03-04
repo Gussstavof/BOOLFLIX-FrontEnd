@@ -1,12 +1,8 @@
 <mat-form-field>
   <mat-label>Select an option</mat-label>
-  <mat-select [(value)]="selected">
-    <mat-option *ngFor="let category of categories" [value]="category.title">
+  <mat-select [(ngModel)]="category" (ngModelChange)="sendCategory($event)">
+    <mat-option *ngFor="let category of categories" [value]="category">
       {{ category.title }}
     </mat-option>
   </mat-select>
 </mat-form-field>
-
-<div>
-  <app-videos [input]="selected"></app-videos>
-</div>

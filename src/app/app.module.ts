@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import { AppComponent } from './app.component';
 import { FooterComponent } from './views/footer/footer.component';
@@ -28,19 +28,20 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
     FilterComponent,
     VideosComponent,
   ],
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-    ServiceModule,
-    AppRoutingModule,
-    AuthModule,
-    HeaderModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatSelectModule,
-    FlexModule,
-    MatCardModule,
-  ],
+    imports: [
+        BrowserModule,
+        ReactiveFormsModule,
+        ServiceModule,
+        AppRoutingModule,
+        AuthModule,
+        HeaderModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatSelectModule,
+        FlexModule,
+        MatCardModule,
+        FormsModule,
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

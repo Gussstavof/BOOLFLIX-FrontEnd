@@ -1,4 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {CategoryModel} from "../../../models/category.model";
+import {VideoService} from "../../../services/video/video.service";
+import {PageableModel} from "../../../models/pageable.model";
+import {CategoryService} from "../../../services/category/category.service";
+import {VideoModel} from "../../../models/video.model";
 
 @Component({
   selector: 'app-videos',
@@ -6,6 +11,19 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./videos.component.css']
 })
 export class VideosComponent {
-  @Input() input: string | undefined;
+  videos: VideoModel[] | undefined;
 
+  constructor(private categoryService: CategoryService) {
+  }
+
+  onChangeCategory(category: CategoryModel) {
+     this.showVideosByCategory(category)
+  }
+
+  showVideosByCategory(category: CategoryModel) {
+    this.categoryService.getVideosByCategory(category.id)
+      .subscribe(data => {
+          this.videos = data.content;
+    });
+  }
 }

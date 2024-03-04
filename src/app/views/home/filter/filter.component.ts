@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CategoryModel} from "../../../models/category.model";
 import {CategoryService} from "../../../services/category/category.service";
+import {BehaviorSubject} from "rxjs";
+import {PageableModel} from "../../../models/pageable.model";
 
 @Component({
   selector: 'app-filter',
@@ -8,23 +10,26 @@ import {CategoryService} from "../../../services/category/category.service";
   styleUrls: ['./filter.component.css']
 })
 export class FilterComponent implements OnInit{
-  selected = '';
+  @Output() categorySelected: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>;
+
+  category: CategoryModel | undefined
   categories?: CategoryModel[];
 
-  constructor(private service: CategoryService) {
-  }
+  constructor(
+    private categoryService: CategoryService
+  ) {}
 
   ngOnInit(): void {
-    this.getAllCategories()
+    this.getAllCategories();
   }
 
   getAllCategories() {
-    this.service.getAllCategories().subscribe(data => {
-      this.categories = data.content
-      this.categories.forEach(category => {
-        console.log(category)
-      })
-    })
+    this.categoryService.getAllCategories().subscribe(data => {
+      this.categories = data.content;
+      this.categories.forEach(category => console.log(category));
+    });
   }
-
+  sendCategory(category: CategoryModel) {
+    this.categorySelected.emit(category);
+  }
 }

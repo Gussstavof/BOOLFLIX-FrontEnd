@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 
 import {AuthService} from "./auth/auth.service";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import {CategoryService} from "./category/category.service";
+import {VideoService} from "./video/video.service";
 
 @NgModule({
   providers: [
     AuthService,
-    CategoryService
+    CategoryService,
+    VideoService
   ],
   imports: [
     HttpClientModule,
