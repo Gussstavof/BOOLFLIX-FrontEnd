@@ -25,3 +25,26 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Docker
+
+### Subir com Docker Compose (porta 4200 para política de CORS)
+
+```bash
+docker compose up --build -d
+```
+
+A aplicação ficará disponível em `http://localhost:4200`, compatível com políticas que aceitam apenas essa origem.
+
+### Parar os containers
+
+```bash
+docker compose down
+```
+
+### Build e execução manual (alternativo)
+
+```bash
+docker build -t flix-frontend .
+docker run --rm -p 4200:80 flix-frontend
+```
