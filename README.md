@@ -25,3 +25,19 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Docker
+
+### Build da imagem
+
+```bash
+docker build -t flix-frontend .
+```
+
+### Executar o container
+
+```bash
+docker run --rm -p 8080:80 flix-frontend
+```
+
+A aplicação ficará disponível em `http://localhost:8080`.
