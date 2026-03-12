@@ -26,6 +26,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
+## Documentação
+
+A documentação técnica e de fluxos do frontend está disponível em `docs/DOCUMENTACAO_TECNICA_BOOLFLIX.md`.
+
 ## Docker
 
 ### Subir com Docker Compose (porta 4200 para política de CORS)

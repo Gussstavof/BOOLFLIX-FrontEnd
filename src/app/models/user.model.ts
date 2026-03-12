@@ -1,7 +1,14 @@
-import {AbstractControl} from "@angular/forms";
+export type UserRole = 'ADM' | 'USER';
 
 export interface UserModel {
-  username?: AbstractControl<String>;
-  email: AbstractControl<String>;
-  password: AbstractControl<String>;
+  username?: string;
+  email: string;
+  password: string;
+  role?: UserRole;
+}
+
+export interface SessionUser {
+  username: string;
+  email: string;
+  role: UserRole;
 }

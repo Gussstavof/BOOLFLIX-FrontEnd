@@ -10,14 +10,16 @@ import {HeaderModule} from "./views/header/header.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './views/home/home.component';
 import { FilterComponent } from './views/home/filter/filter.component';
-import {MatInputModule} from "@angular/material/input";
-import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 import { VideosComponent } from './views/home/videos/videos.component';
 import {FlexModule} from "@angular/flex-layout";
-import {MatCardModule} from "@angular/material/card";
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import {ServiceModule} from "./services/service.module";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthInterceptor} from './interceptors/auth.interceptor';
+import {AdminComponent} from './views/admin/admin.component';
 
 
 @NgModule({
@@ -27,6 +29,7 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
     HomeComponent,
     FilterComponent,
     VideosComponent,
+    AdminComponent,
   ],
     imports: [
         BrowserModule,
@@ -40,6 +43,7 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
         MatSelectModule,
         FlexModule,
         MatCardModule,
+        MatFormFieldModule,
         FormsModule,
     ],
   providers: [
