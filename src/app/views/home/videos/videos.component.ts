@@ -1,34 +1,46 @@
-import {Component, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {CategoryModel} from "../../../models/category.model";
-import {VideoService} from "../../../services/video/video.service";
-import {PageableModel} from "../../../models/pageable.model";
-import {CategoryService} from "../../../services/category/category.service";
-import {VideoModel} from "../../../models/video.model";
-import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {Component, OnInit} from '@angular/core';
+import {CategoryModel} from '../../../models/category.model';
+import {VideoModel} from '../../../models/video.model';
+import {DomSanitizer} from '@angular/platform-browser';
+import {VideoService} from '../../../services/video/video.service';
 
 @Component({
   selector: 'app-videos',
   templateUrl: './videos.component.html',
   styleUrls: ['./videos.component.css']
 })
-export class VideosComponent {
-  videos: VideoModel[] | undefined;
+export class VideosComponent implements OnInit {
+  videos: VideoModel[] = [];
+  selectedCategoryId?: string;
+  searchTerm = '';
 
-  constructor(private categoryService: CategoryService,
-              private sanitizer: DomSanitizer
-  ) {}
-
-  onChangeCategory(category: CategoryModel) {
-     this.showVideosByCategory(category)
+  constructor(
+    private videoService: VideoService,
+    private sanitizer: DomSanitizer
+  ) {
   }
 
-  showVideosByCategory(category: CategoryModel) {
-    this.categoryService.getVideosByCategory(category.id)
-      .subscribe(data => {
-        this.videos = data.content;
-        this.videos.forEach(video =>{
-          video.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
-        });
-    });
+  ngOnInit(): void {
+    this.loadVideos();
+  }
+
+  onChangeCategory(category: CategoryModel | null) {
+    this.selectedCategoryId = category?.id;
+    this.loadVideos();
+  }
+
+  onSearchChanged(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.loadVideos();
+  }
+
+  private loadVideos(): void {
+    this.videoService.getVideos(this.selectedCategoryId, this.searchTerm)
+      .subscribe(videos => {
+        this.videos = videos.map(video => ({
+          ...video,
+          urlSafe: this.sanitizer.bypassSecurityTrustResourceUrl(video.url)
+        }));
+      });
   }
 }

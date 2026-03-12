@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {AuthService} from "../../../services/auth/auth.service";
-import {Route, Router} from "@angular/router";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../../../services/auth/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -9,29 +9,32 @@ import {Route, Router} from "@angular/router";
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
+  signupForm: FormGroup = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+  });
+
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
-
-  signupForm: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
-  });
+  ) {
+  }
 
   onSubmit() {
-    let form: any = this.signupForm.value;
+    if (this.signupForm.invalid) {
+      return;
+    }
+
+    const form = this.signupForm.value;
 
     this.authService.createSignup({
       username: form.username,
       email: form.email,
       password: form.password
     }).subscribe(async res => {
-      console.log(res)
       if (res.status === 201 && res.body) {
-        sessionStorage.setItem('token', res.body.token);
-        await this.router.navigateByUrl('home');
+        await this.router.navigateByUrl('/home');
       }
     });
   }

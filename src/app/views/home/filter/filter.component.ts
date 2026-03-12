@@ -1,35 +1,39 @@
-import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {CategoryModel} from "../../../models/category.model";
-import {CategoryService} from "../../../services/category/category.service";
-import {BehaviorSubject} from "rxjs";
-import {PageableModel} from "../../../models/pageable.model";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {CategoryService} from '../../../services/category/category.service';
+import {CategoryModel} from '../../../models/category.model';
+import {FormControl} from '@angular/forms';
+import {debounceTime, distinctUntilChanged} from 'rxjs';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit{
-  @Output() categorySelected: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>;
+export class FilterComponent implements OnInit {
+  @Output() categorySelected = new EventEmitter<CategoryModel | null>();
+  @Output() searchChanged = new EventEmitter<string>();
 
-  category: CategoryModel | undefined
+  category: CategoryModel | null = null;
   categories?: CategoryModel[];
+  searchControl = new FormControl('');
 
-  constructor(
-    private categoryService: CategoryService
-  ) {}
+  constructor(private categoryService: CategoryService) {
+  }
 
   ngOnInit(): void {
     this.getAllCategories();
+    this.searchControl.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe(value => this.searchChanged.emit((value || '').trim()));
   }
 
   getAllCategories() {
     this.categoryService.getAllCategories().subscribe(data => {
       this.categories = data.content;
-      this.categories.forEach(category => console.log(category));
     });
   }
-  sendCategory(category: CategoryModel) {
+
+  sendCategory(category: CategoryModel | null) {
     this.categorySelected.emit(category);
   }
 }

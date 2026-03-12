@@ -1,25 +1,25 @@
-<app-filter (categorySelected)="onChangeCategory($event)"></app-filter>
-<div fxLayout="row wrap" fxLayoutAlign="start center" style="padding: 2%">
-  <div *ngFor="let video of videos" style="margin: 0.5%;">
-    <mat-card class="mat-card-live" fxFlex="0 1 calc(33.3% - 11px)"
-              fxFlex.lt-md="0 1 calc(50% - 11px)"
-              fxFlex.lt-sm="100%">
+<app-filter
+  (categorySelected)="onChangeCategory($event)"
+  (searchChanged)="onSearchChanged($event)">
+</app-filter>
 
-      <mat-card-title class="mat-card-title-live">
-        <div class="row">
-          <p>
-            <span style="font-size:0.9rem;" fxFlex="70" fxLayoutAlign="start center">{{ video.title }}</span>
-            <span fxFlex></span>
-          </p>
-        </div>
-      </mat-card-title>
-      <mat-card-content fxLayoutAlign="center center">
-        <div>
-          <iframe width="560" height="315" [src]="video.urlSafe" frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen></iframe>
-        </div>
+<div class="row g-3" *ngIf="videos.length; else emptyState">
+  <div class="col-md-6 col-lg-4" *ngFor="let video of videos">
+    <mat-card class="h-100">
+      <mat-card-header>
+        <mat-card-title>{{ video.title }}</mat-card-title>
+        <mat-card-subtitle [style.color]="video.category.color">{{ video.category.title }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <iframe width="100%" height="220" [src]="video.urlSafe" frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        <p class="mt-2 mb-0">{{ video.description }}</p>
       </mat-card-content>
     </mat-card>
   </div>
 </div>
+
+<ng-template #emptyState>
+  <p class="text-muted">Nenhum vídeo encontrado com os filtros selecionados.</p>
+</ng-template>
