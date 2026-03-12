@@ -1,12 +1,12 @@
-export interface PageableModel {
-  content: any[];
+export interface PageableModel<T> {
+  content: T[];
   first: boolean;
   last: boolean;
   number: number;
   numberOfElements: number;
-  pageable: any[];
+  pageable: unknown;
   size: number;
-  sort: number;
+  sort: unknown;
   totalElements: number;
   totalPages: number;
 }

@@ -1,34 +1,40 @@
-import {Component, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {CategoryModel} from "../../../models/category.model";
-import {VideoService} from "../../../services/video/video.service";
-import {PageableModel} from "../../../models/pageable.model";
-import {CategoryService} from "../../../services/category/category.service";
-import {VideoModel} from "../../../models/video.model";
-import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { CategoryModel } from '../../../models/category.model';
+import { VideoModel } from '../../../models/video.model';
+import { CategoryService } from '../../../services/category/category.service';
+import { VideoService } from '../../../services/video/video.service';
 
 @Component({
   selector: 'app-videos',
   templateUrl: './videos.component.html',
   styleUrls: ['./videos.component.css']
 })
-export class VideosComponent {
-  videos: VideoModel[] | undefined;
+export class VideosComponent implements OnInit {
+  videos: VideoModel[] = [];
 
-  constructor(private categoryService: CategoryService,
-              private sanitizer: DomSanitizer
+  constructor(
+    private categoryService: CategoryService,
+    private videoService: VideoService,
+    private sanitizer: DomSanitizer
   ) {}
 
-  onChangeCategory(category: CategoryModel) {
-     this.showVideosByCategory(category)
+  ngOnInit(): void {
+    this.videoService.getVideos().subscribe((data) => {
+      this.videos = this.sanitizeVideoUrls(data.content);
+    });
   }
 
-  showVideosByCategory(category: CategoryModel) {
-    this.categoryService.getVideosByCategory(category.id)
-      .subscribe(data => {
-        this.videos = data.content;
-        this.videos.forEach(video =>{
-          video.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
-        });
+  onChangeCategory(category: CategoryModel): void {
+    this.categoryService.getVideosByCategory(category.id).subscribe((data) => {
+      this.videos = this.sanitizeVideoUrls(data.content);
     });
+  }
+
+  private sanitizeVideoUrls(videos: VideoModel[]): VideoModel[] {
+    return videos.map((video) => ({
+      ...video,
+      urlSafe: this.sanitizer.bypassSecurityTrustResourceUrl(video.url)
+    }));
   }
 }

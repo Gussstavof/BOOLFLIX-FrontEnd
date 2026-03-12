@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -7,25 +8,10 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  currentHeaderComponent: any;
+  constructor(public authService: AuthService, private router: Router) {}
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.checkHeaderComponent();
-      }
-    });
-  }
-
-  checkHeaderComponent() {
-    const routeData = this.getChildRouteData(this.activatedRoute);
-    this.currentHeaderComponent = routeData.headerComponent;
-  }
-
-  getChildRouteData(route: ActivatedRoute): any {
-    if (route.firstChild) {
-      return this.getChildRouteData(route.firstChild);
-    }
-    return route.snapshot.data;
+  logout(): void {
+    this.authService.logout();
+    this.router.navigateByUrl('/signin');
   }
 }

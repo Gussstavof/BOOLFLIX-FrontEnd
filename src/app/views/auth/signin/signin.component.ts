@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {AuthService} from "../../../services/auth/auth.service";
-import {Router} from "@angular/router";
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -15,20 +15,16 @@ export class SigninComponent {
   ) {}
 
   signInForm: FormGroup = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)])
   });
 
-  onSubmit() {
-    let form: any = this.signInForm.value
+  onSubmit(): void {
+    if (this.signInForm.invalid) return;
 
-    this.authService.createSignIn({
-      email: form.email,
-      password: form.password
-    }).subscribe(async res => {
-      if (res.status === 200 && res.body) {
-        sessionStorage.setItem('token', res.body.token);
-        await this.router.navigateByUrl('home');
+    this.authService.login(this.signInForm.value as { email: string; password: string }).subscribe({
+      next: async () => {
+        await this.router.navigateByUrl('/home');
       }
     });
   }

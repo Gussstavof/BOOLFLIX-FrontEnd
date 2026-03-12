@@ -1,0 +1,5 @@
+<section class="container py-4" *ngIf="video">
+  <h2>{{ video.title }}</h2>
+  <p>{{ video.description }}</p>
+  <a [href]="video.url" target="_blank" rel="noreferrer">Assistir</a>
+</section>
