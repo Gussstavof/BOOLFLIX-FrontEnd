@@ -1,13 +1,17 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/home">BOOLFLIX</a>
+<nav class="navbar navbar-expand-lg bf-header px-3 px-md-4">
+  <a class="navbar-brand fw-bold" routerLink="/home">BOOLFLIX</a>
 
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLinks">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarLinks">
     <ul class="navbar-nav ms-auto" *ngIf="authService.isAuthenticated(); else guestLinks">
       <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
       <li class="nav-item"><a class="nav-link" routerLink="/profile">Perfil</a></li>
       <li class="nav-item" *ngIf="authService.isAdmin()"><a class="nav-link" routerLink="/admin/videos">Admin Videos</a></li>
       <li class="nav-item" *ngIf="authService.isAdmin()"><a class="nav-link" routerLink="/admin/categories">Admin Categories</a></li>
-      <li class="nav-item"><button class="btn btn-link nav-link" (click)="logout()">Sair</button></li>
+      <li class="nav-item"><button class="btn nav-link" (click)="logout()">Sair</button></li>
     </ul>
 
     <ng-template #guestLinks>

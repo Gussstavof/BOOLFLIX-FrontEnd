@@ -1,8 +1,25 @@
-.example-card {
-  max-width: 400px;
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.video-card {
+  padding: 1rem;
+}
+
+.video-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.45rem;
+}
+
+.video-card p {
+  margin: 0;
+  color: var(--bf-muted);
+  font-size: 0.9rem;
 }

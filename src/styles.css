@@ -1,4 +1,54 @@
 @import "bootstrap/dist/css/bootstrap.css";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+  --bf-bg: #0b1020;
+  --bf-surface: #11192e;
+  --bf-surface-soft: #1a2747;
+  --bf-primary: #6d5efc;
+  --bf-primary-soft: #8b7dff;
+  --bf-accent: #25d0ff;
+  --bf-text: #f3f5ff;
+  --bf-muted: #9aa6c5;
+  --bf-danger: #ff5f83;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top right, #1e2d58 0%, var(--bf-bg) 42%);
+  color: var(--bf-text);
+  font-family: 'Inter', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.page-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.bf-panel {
+  background: rgba(17, 25, 46, 0.9);
+  border: 1px solid rgba(138, 158, 209, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 16px 30px rgba(7, 10, 18, 0.25);
+}
+
+.bf-btn-primary {
+  background: linear-gradient(90deg, var(--bf-primary), var(--bf-accent));
+  border: none;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.bf-btn-primary:hover {
+  filter: brightness(1.08);
+}

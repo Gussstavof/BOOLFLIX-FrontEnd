@@ -1,8 +1,10 @@
-<mat-form-field>
-  <mat-label>Select an option</mat-label>
-  <mat-select [(ngModel)]="category" (ngModelChange)="sendCategory($event)">
-    <mat-option *ngFor="let category of categories" [value]="category">
-      {{ category.title }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="filter-wrap bf-panel p-3">
+  <mat-form-field appearance="outline" class="w-100 m-0">
+    <mat-label>Filtrar por categoria</mat-label>
+    <mat-select [(ngModel)]="category" (ngModelChange)="sendCategory($event)">
+      <mat-option *ngFor="let category of categories" [value]="category">
+        {{ category.title }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
