@@ -1,0 +1,38 @@
+h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.text-muted {
+  color: var(--bf-muted) !important;
+}
+
+.stat-card .label {
+  color: var(--bf-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+}
+
+.search-input {
+  background: rgba(10, 16, 32, 0.85);
+  border: 1px solid rgba(154, 166, 197, 0.25);
+  color: #fff;
+}
+
+.search-input::placeholder {
+  color: #95a2c5;
+}
+
+.search-input:focus {
+  box-shadow: none;
+  border-color: var(--bf-primary-soft);
+  background: rgba(10, 16, 32, 0.95);
+  color: #fff;
+}
+
+.custom-table {
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.02);
+}
+

@@ -1,11 +1,12 @@
-import {CategoryModel} from "./category.model";
-import {SafeResourceUrl} from "@angular/platform-browser";
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 export interface VideoModel {
-  id: string;
+  id: number;
   title: string;
   description: string;
-  category: CategoryModel;
   url: string;
-  urlSafe: SafeResourceUrl;
+  categoryId: number;
+  categoryTitle?: string;
+  thumbnailUrl?: string;
+  urlSafe?: SafeResourceUrl;
 }

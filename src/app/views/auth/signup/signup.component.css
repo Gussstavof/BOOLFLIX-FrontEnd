@@ -1,3 +1,29 @@
-.card {
-  margin-top: 75px !important;
+.auth-shell {
+  min-height: calc(100vh - 140px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 2rem;
+}
+
+.auth-card h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.35rem;
+}
+
+.auth-card p {
+  color: var(--bf-muted);
+  margin-bottom: 1.2rem;
+}
+
+.form-control {
+  background: rgba(10, 16, 32, 0.8);
+  border: 1px solid rgba(154, 166, 197, 0.3);
+  color: #fff;
 }

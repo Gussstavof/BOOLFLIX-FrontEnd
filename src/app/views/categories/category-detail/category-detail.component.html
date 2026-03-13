@@ -1,0 +1,44 @@
+<section class="page-shell pt-4" *ngIf="category; else loadingOrMissing">
+  <div class="d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between mb-3">
+    <div>
+      <h2 class="mb-1">{{ category.title }}</h2>
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <span class="badge rounded-pill px-3 py-2" [ngStyle]="badgeStyle">{{ category.color }}</span>
+        <span class="text-muted small">ID {{ category.id }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="py-5 text-center text-muted">Carregando videos...</div>
+
+  <div class="videos-grid mt-4" *ngIf="!isLoading">
+    <a class="video-card bf-panel" *ngFor="let video of videos" [routerLink]="['/videos', video.id]">
+      <div class="thumb">
+        <img [src]="getThumbnailUrl(video)" [alt]="video.title" loading="lazy" />
+        <div class="thumb-overlay" aria-hidden="true">
+          <span class="play-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"></path>
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-3 d-flex flex-column gap-2">
+        <h3 class="video-title m-0">{{ video.title }}</h3>
+        <p class="video-desc m-0 text-muted">{{ video.description }}</p>
+      </div>
+    </a>
+
+    <div *ngIf="videos.length === 0" class="bf-panel p-4 text-center text-muted">
+      Nenhum video nesta categoria.
+    </div>
+  </div>
+</section>
+
+<ng-template #loadingOrMissing>
+  <section class="page-shell py-5 text-center text-muted">
+    {{ isLoading ? 'Carregando categoria...' : 'Categoria nao encontrada.' }}
+  </section>
+</ng-template>
+

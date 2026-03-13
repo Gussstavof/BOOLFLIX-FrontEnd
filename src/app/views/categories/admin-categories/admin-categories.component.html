@@ -1,0 +1,77 @@
+<section class="page-shell">
+  <div class="d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between mb-4">
+    <div>
+      <h1 class="mb-1">Admin - Categorias</h1>
+      <p class="text-muted mb-0">Crie, edite e organize as categorias do catalogo.</p>
+    </div>
+    <button class="btn bf-btn-primary px-4 py-2" type="button" (click)="openCreate()">+ Nova categoria</button>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-md-4">
+      <article class="bf-panel p-3 stat-card">
+        <p class="label mb-1">Total</p>
+        <h3 class="mb-0">{{ categories.length }}</h3>
+      </article>
+    </div>
+    <div class="col-12 col-md-4">
+      <article class="bf-panel p-3 stat-card">
+        <p class="label mb-1">Exibidas</p>
+        <h3 class="mb-0">{{ filteredCategories.length }}</h3>
+      </article>
+    </div>
+    <div class="col-12 col-md-4">
+      <article class="bf-panel p-3 stat-card">
+        <p class="label mb-1">Status</p>
+        <h3 class="mb-0">{{ isLoading ? 'Carregando' : 'Atualizado' }}</h3>
+      </article>
+    </div>
+  </div>
+
+  <div class="bf-panel p-3 p-md-4">
+    <div class="d-flex flex-column flex-md-row gap-3 mb-3 align-items-md-center">
+      <input class="form-control search-input" placeholder="Buscar por titulo" [formControl]="searchControl" />
+      <button class="btn btn-outline-light" type="button" (click)="loadCategories()">Atualizar</button>
+    </div>
+
+    <div *ngIf="isLoading" class="py-4 text-center text-muted">Carregando categorias...</div>
+
+    <div class="table-responsive" *ngIf="!isLoading">
+      <table class="table align-middle table-dark custom-table mb-0">
+        <thead>
+          <tr>
+            <th>Titulo</th>
+            <th>Cor</th>
+            <th class="text-end">Acoes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of filteredCategories">
+            <td>
+              <div class="d-flex flex-column">
+                <span class="fw-semibold">{{ category.title }}</span>
+                <a class="small text-muted text-decoration-none" [routerLink]="['/categories', category.id]">
+                  Abrir detalhes
+                </a>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge rounded-pill px-3 py-2" [ngStyle]="badgeStyle(category)">{{ category.color }}</span>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-sm btn-outline-info" type="button" (click)="openEdit(category)">Editar</button>
+                <button class="btn btn-sm btn-outline-danger" type="button" (click)="confirmDelete(category)">Excluir</button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="filteredCategories.length === 0">
+            <td colspan="3" class="text-center text-muted py-4">Nenhuma categoria encontrada.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
