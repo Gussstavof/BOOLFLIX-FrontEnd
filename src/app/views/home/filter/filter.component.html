@@ -1,10 +1,31 @@
-<div class="filter-wrap bf-panel p-3">
-  <mat-form-field appearance="outline" class="w-100 m-0">
-    <mat-label>Filtrar por categoria</mat-label>
-    <mat-select [(ngModel)]="category" (ngModelChange)="sendCategory($event)">
-      <mat-option *ngFor="let category of categories" [value]="category">
-        {{ category.title }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="bf-panel p-3 filter-wrap d-flex flex-column gap-3">
+  <div class="position-relative">
+    <input
+      class="form-control search-input"
+      placeholder="Buscar por titulo"
+      [formControl]="searchControl"
+      aria-label="Buscar videos"
+    />
+  </div>
+
+  <div class="chip-row" role="list" aria-label="Categorias">
+    <button
+      type="button"
+      class="chip"
+      [class.is-active]="selectedCategoryId === null"
+      (click)="selectCategory(null)"
+    >
+      Todas
+    </button>
+
+    <button
+      *ngFor="let category of categories"
+      type="button"
+      class="chip"
+      [class.is-active]="selectedCategoryId === category.id"
+      (click)="selectCategory(category.id)"
+    >
+      {{ category.title }}
+    </button>
+  </div>
 </div>

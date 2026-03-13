@@ -1,31 +1,34 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 import { CategoryModel } from '../../../models/category.model';
-import { CategoryService } from '../../../services/category/category.service';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit {
-  @Output() categorySelected: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>();
+export class FilterComponent implements OnInit, OnDestroy {
+  @Input() categories: CategoryModel[] = [];
+  @Input() selectedCategoryId: number | null = null;
+  @Output() categorySelected = new EventEmitter<number | null>();
+  @Output() searchChanged = new EventEmitter<string>();
 
-  category?: CategoryModel;
-  categories?: CategoryModel[];
-
-  constructor(private categoryService: CategoryService) {}
+  searchControl = new FormControl('', { nonNullable: true });
+  private subscription?: Subscription;
 
   ngOnInit(): void {
-    this.getAllCategories();
+    this.subscription = this.searchControl.valueChanges
+      .pipe(debounceTime(250), distinctUntilChanged())
+      .subscribe((term) => this.searchChanged.emit(term));
   }
 
-  getAllCategories(): void {
-    this.categoryService.getCategories().subscribe((data) => {
-      this.categories = data.content;
-    });
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
-  sendCategory(category: CategoryModel): void {
-    this.categorySelected.emit(category);
+  selectCategory(categoryId: number | null): void {
+    this.selectedCategoryId = categoryId;
+    this.categorySelected.emit(categoryId);
   }
 }

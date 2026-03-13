@@ -3,9 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FlexModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
@@ -23,6 +27,9 @@ import { CategoryDetailComponent } from './views/categories/category-detail/cate
 import { ProfileComponent } from './views/profile/profile.component';
 import { AdminVideosComponent } from './views/videos/admin-videos/admin-videos.component';
 import { AdminCategoriesComponent } from './views/categories/admin-categories/admin-categories.component';
+import { ConfirmDialogComponent } from './views/shared/dialogs/confirm-dialog/confirm-dialog.component';
+import { VideoFormDialogComponent } from './views/videos/video-form-dialog/video-form-dialog.component';
+import { CategoryFormDialogComponent } from './views/categories/category-form-dialog/category-form-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +42,10 @@ import { AdminCategoriesComponent } from './views/categories/admin-categories/ad
     CategoryDetailComponent,
     ProfileComponent,
     AdminVideosComponent,
-    AdminCategoriesComponent
+    AdminCategoriesComponent,
+    ConfirmDialogComponent,
+    VideoFormDialogComponent,
+    CategoryFormDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -45,8 +55,12 @@ import { AdminCategoriesComponent } from './views/categories/admin-categories/ad
     AuthModule,
     HeaderModule,
     BrowserAnimationsModule,
+    MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatSnackBarModule,
     FlexModule,
     MatCardModule,
     FormsModule

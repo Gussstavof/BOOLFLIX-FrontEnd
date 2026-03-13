@@ -1,5 +1,46 @@
-<section class="container py-4" *ngIf="video">
-  <h2>{{ video.title }}</h2>
-  <p>{{ video.description }}</p>
-  <a [href]="video.url" target="_blank" rel="noreferrer">Assistir</a>
+<section class="page-shell pt-4" *ngIf="video; else loadingOrMissing">
+  <div class="d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between mb-3">
+    <div>
+      <h2 class="mb-1">{{ video.title }}</h2>
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <a
+          class="badge rounded-pill text-decoration-none"
+          [ngStyle]="categoryBadgeStyle"
+          [routerLink]="['/categories', video.categoryId]"
+        >
+          {{ category?.title || ('ID ' + video.categoryId) }}
+        </a>
+        <span class="text-muted small">ID {{ video.id }}</span>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2" *ngIf="authService.isAdmin()">
+      <button type="button" class="btn btn-outline-info" (click)="openEdit()">Editar</button>
+      <button type="button" class="btn btn-outline-danger" (click)="confirmDelete()">Excluir</button>
+    </div>
+  </div>
+
+  <div class="bf-panel overflow-hidden">
+    <div class="ratio ratio-16x9">
+      <iframe
+        *ngIf="safeEmbedUrl"
+        [src]="safeEmbedUrl"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+
+  <div class="bf-panel p-3 p-md-4 mt-3">
+    <h3 class="h5 mb-2">Descricao</h3>
+    <p class="m-0 text-muted">{{ video.description }}</p>
+  </div>
 </section>
+
+<ng-template #loadingOrMissing>
+  <section class="page-shell py-5 text-center text-muted">
+    {{ isLoading ? 'Carregando video...' : 'Video nao encontrado.' }}
+  </section>
+</ng-template>
+

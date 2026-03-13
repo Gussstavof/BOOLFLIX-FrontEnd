@@ -1,23 +1,51 @@
 <section class="page-shell pt-4">
-  <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="section-title mb-0">Catálogo de vídeos</h2>
+  <div class="d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between mb-3">
+    <div>
+      <h2 class="section-title mb-1">Catalogo de videos</h2>
+      <p class="text-muted mb-0">Busque, filtre por categoria e abra o player na pagina de detalhes.</p>
+    </div>
+    <button class="btn btn-outline-light" type="button" (click)="load()" [disabled]="isLoading">
+      {{ isLoading ? 'Carregando...' : 'Atualizar' }}
+    </button>
   </div>
 
-  <app-filter (categorySelected)="onChangeCategory($event)"></app-filter>
+  <app-filter
+    [categories]="categories"
+    [selectedCategoryId]="selectedCategoryId"
+    (categorySelected)="onCategorySelected($event)"
+    (searchChanged)="onSearchChanged($event)"
+  ></app-filter>
 
-  <div class="videos-grid mt-4">
-    <article class="video-card bf-panel" *ngFor="let video of videos">
-      <div class="ratio ratio-16x9 rounded overflow-hidden mb-3">
-        <iframe
-          [src]="video.urlSafe"
-          frameborder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+  <div *ngIf="isLoading" class="py-5 text-center text-muted">Carregando videos...</div>
+
+  <div class="videos-grid mt-4" *ngIf="!isLoading">
+    <a class="video-card bf-panel" *ngFor="let video of filteredVideos" [routerLink]="['/videos', video.id]">
+      <div class="thumb">
+        <img [src]="getThumbnailUrl(video)" [alt]="video.title" loading="lazy" />
+        <div class="thumb-overlay" aria-hidden="true">
+          <span class="play-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"></path>
+            </svg>
+          </span>
+        </div>
       </div>
 
-      <h3>{{ video.title }}</h3>
-      <p>{{ video.description }}</p>
-    </article>
+      <div class="p-3 d-flex flex-column gap-2">
+        <div class="d-flex align-items-start justify-content-between gap-2">
+          <h3 class="video-title m-0">{{ video.title }}</h3>
+          <span class="badge rounded-pill video-badge" [ngStyle]="getCategoryBadgeStyle(video.categoryId)">
+            {{ getCategoryLabel(video.categoryId) }}
+          </span>
+        </div>
+
+        <p class="video-desc m-0 text-muted">{{ video.description }}</p>
+      </div>
+    </a>
+
+    <div *ngIf="filteredVideos.length === 0" class="bf-panel p-4 text-center text-muted">
+      Nenhum video encontrado.
+    </div>
   </div>
 </section>
+

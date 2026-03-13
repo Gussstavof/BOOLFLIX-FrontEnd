@@ -1,16 +1,16 @@
 <section class="page-shell">
   <div class="d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between mb-4">
     <div>
-      <h1 class="mb-1">Admin • Vídeos</h1>
-      <p class="text-muted mb-0">Gerencie o catálogo da plataforma com uma visão rápida e objetiva.</p>
+      <h1 class="mb-1">Admin - Videos</h1>
+      <p class="text-muted mb-0">Gerencie o catalogo da plataforma com uma visao rapida e objetiva.</p>
     </div>
-    <button class="btn bf-btn-primary px-4 py-2">+ Novo vídeo</button>
+    <button class="btn bf-btn-primary px-4 py-2" type="button" (click)="openCreate()">+ Novo video</button>
   </div>
 
   <div class="row g-3 mb-4">
     <div class="col-12 col-md-4">
       <article class="bf-panel p-3 stat-card">
-        <p class="label mb-1">Total de vídeos</p>
+        <p class="label mb-1">Total de videos</p>
         <h3 class="mb-0">{{ videos.length }}</h3>
       </article>
     </div>
@@ -30,24 +30,20 @@
 
   <div class="bf-panel p-3 p-md-4">
     <div class="d-flex flex-column flex-md-row gap-3 mb-3 align-items-md-center">
-      <input
-        class="form-control search-input"
-        placeholder="Buscar por título ou descrição"
-        [formControl]="searchControl"
-      />
-      <button class="btn btn-outline-light" (click)="loadVideos()">Atualizar</button>
+      <input class="form-control search-input" placeholder="Buscar por titulo ou descricao" [formControl]="searchControl" />
+      <button class="btn btn-outline-light" type="button" (click)="loadVideos()">Atualizar</button>
     </div>
 
-    <div *ngIf="isLoading" class="py-4 text-center text-muted">Carregando vídeos...</div>
+    <div *ngIf="isLoading" class="py-4 text-center text-muted">Carregando videos...</div>
 
     <div class="table-responsive" *ngIf="!isLoading">
       <table class="table align-middle table-dark custom-table mb-0">
         <thead>
           <tr>
-            <th>Título</th>
-            <th class="d-none d-md-table-cell">Descrição</th>
+            <th>Titulo</th>
+            <th class="d-none d-md-table-cell">Descricao</th>
             <th class="d-none d-lg-table-cell">Categoria</th>
-            <th class="text-end">Ações</th>
+            <th class="text-end">Acoes</th>
           </tr>
         </thead>
         <tbody>
@@ -57,13 +53,13 @@
             <td class="d-none d-lg-table-cell">{{ video.categoryTitle || ('ID ' + video.categoryId) }}</td>
             <td>
               <div class="d-flex justify-content-end gap-2">
-                <button class="btn btn-sm btn-outline-info">Editar</button>
-                <button class="btn btn-sm btn-outline-danger">Excluir</button>
+                <button class="btn btn-sm btn-outline-info" type="button" (click)="openEdit(video)">Editar</button>
+                <button class="btn btn-sm btn-outline-danger" type="button" (click)="confirmDelete(video)">Excluir</button>
               </div>
             </td>
           </tr>
           <tr *ngIf="filteredVideos.length === 0">
-            <td colspan="4" class="text-center text-muted py-4">Nenhum vídeo encontrado.</td>
+            <td colspan="4" class="text-center text-muted py-4">Nenhum video encontrado.</td>
           </tr>
         </tbody>
       </table>

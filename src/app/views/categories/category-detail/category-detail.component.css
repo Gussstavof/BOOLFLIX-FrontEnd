@@ -1,8 +1,3 @@
-.section-title {
-  font-size: 1.4rem;
-  font-weight: 700;
-}
-
 .text-muted {
   color: var(--bf-muted) !important;
 }
@@ -76,12 +71,6 @@
   font-size: 1rem;
   font-weight: 650;
   line-height: 1.2;
-}
-
-.video-badge {
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
 }
 
 .video-desc {
