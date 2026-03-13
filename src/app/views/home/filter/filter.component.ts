@@ -1,35 +1,34 @@
-import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {CategoryModel} from "../../../models/category.model";
-import {CategoryService} from "../../../services/category/category.service";
-import {BehaviorSubject} from "rxjs";
-import {PageableModel} from "../../../models/pageable.model";
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
+import { CategoryModel } from '../../../models/category.model';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit{
-  @Output() categorySelected: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>;
+export class FilterComponent implements OnInit, OnDestroy {
+  @Input() categories: CategoryModel[] = [];
+  @Input() selectedCategoryId: string | null = null;
+  @Output() categorySelected = new EventEmitter<string | null>();
+  @Output() searchChanged = new EventEmitter<string>();
 
-  category: CategoryModel | undefined
-  categories?: CategoryModel[];
-
-  constructor(
-    private categoryService: CategoryService
-  ) {}
+  searchControl = new FormControl('', { nonNullable: true });
+  private subscription?: Subscription;
 
   ngOnInit(): void {
-    this.getAllCategories();
+    this.subscription = this.searchControl.valueChanges
+      .pipe(debounceTime(250), distinctUntilChanged())
+      .subscribe((term) => this.searchChanged.emit(term));
   }
 
-  getAllCategories() {
-    this.categoryService.getAllCategories().subscribe(data => {
-      this.categories = data.content;
-      this.categories.forEach(category => console.log(category));
-    });
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
-  sendCategory(category: CategoryModel) {
-    this.categorySelected.emit(category);
+
+  selectCategory(categoryId: string | null): void {
+    this.selectedCategoryId = categoryId;
+    this.categorySelected.emit(categoryId);
   }
 }

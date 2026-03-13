@@ -1,0 +1,76 @@
+<div class="layout-root">
+  <aside class="sidebar d-none d-md-flex">
+    <div class="sidebar-header">
+      <a class="brand" routerLink="/">
+        <span class="brand-icon">F</span>
+        BOOLFLIX
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a
+        *ngFor="let item of navItems"
+        class="nav-link"
+        [routerLink]="item.path"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+      >
+        <span class="nav-icon" aria-hidden="true">
+          <span [ngSwitch]="item.icon">
+            <span *ngSwitchCase="'home'">⌂</span>
+            <span *ngSwitchCase="'film'">▶</span>
+            <span *ngSwitchCase="'grid'">▦</span>
+            <span *ngSwitchCase="'user'">☺</span>
+          </span>
+        </span>
+        {{ item.label }}
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-row">
+        <div class="avatar">{{ initials }}</div>
+        <div class="user-meta">
+          <div class="user-name">{{ authService.getCurrentUser()?.username }}</div>
+          <div class="user-role">{{ authService.isAdmin() ? 'Administrador' : 'Usuario' }}</div>
+        </div>
+      </div>
+      <button class="btn btn-outline-danger w-100" type="button" (click)="logout()">Sair</button>
+    </div>
+  </aside>
+
+  <header class="mobile-header d-md-none">
+    <a class="brand" routerLink="/">
+      <span class="brand-icon">F</span>
+      BOOLFLIX
+    </a>
+    <div class="avatar avatar-sm">{{ initials }}</div>
+  </header>
+
+  <main class="main">
+    <div class="container-shell">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <nav class="bottom-nav d-md-none">
+    <a
+      *ngFor="let item of navItems"
+      class="bottom-link"
+      [routerLink]="item.path"
+      routerLinkActive="is-active"
+      [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+    >
+      <span class="bottom-icon" aria-hidden="true">
+        <span [ngSwitch]="item.icon">
+          <span *ngSwitchCase="'home'">⌂</span>
+          <span *ngSwitchCase="'film'">▶</span>
+          <span *ngSwitchCase="'grid'">▦</span>
+          <span *ngSwitchCase="'user'">☺</span>
+        </span>
+      </span>
+      <span class="bottom-label">{{ item.label }}</span>
+    </a>
+  </nav>
+</div>
+

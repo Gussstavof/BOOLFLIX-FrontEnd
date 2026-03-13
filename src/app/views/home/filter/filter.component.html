@@ -1,8 +1,32 @@
-<mat-form-field>
-  <mat-label>Select an option</mat-label>
-  <mat-select [(ngModel)]="category" (ngModelChange)="sendCategory($event)">
-    <mat-option *ngFor="let category of categories" [value]="category">
+<div class="bf-panel p-3 filter-wrap d-flex flex-column gap-3">
+  <div class="position-relative">
+    <input
+      class="form-control search-input"
+      placeholder="Buscar videos..."
+      [formControl]="searchControl"
+      aria-label="Buscar videos"
+    />
+  </div>
+
+  <div class="chip-row" role="list" aria-label="Categorias">
+    <button
+      type="button"
+      class="chip"
+      [class.is-active]="selectedCategoryId === null"
+      (click)="selectCategory(null)"
+    >
+      Todos
+    </button>
+
+    <button
+      *ngFor="let category of categories"
+      type="button"
+      class="chip"
+      [class.is-active]="selectedCategoryId === category.id"
+      (click)="selectCategory(category.id)"
+    >
       {{ category.title }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+    </button>
+  </div>
+</div>
+

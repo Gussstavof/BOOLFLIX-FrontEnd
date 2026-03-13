@@ -1,0 +1,46 @@
+<section class="admin-shell">
+  <div class="d-flex flex-column flex-sm-row gap-3 align-items-sm-center justify-content-between mb-4">
+    <h1 class="h4 m-0">Gerenciar Categorias</h1>
+    <button class="btn btn-primary" type="button" (click)="load()">Atualizar</button>
+  </div>
+
+  <div class="mb-3">
+    <input class="form-control" placeholder="Buscar por titulo..." [formControl]="searchControl" />
+  </div>
+
+  <div *ngIf="isLoading" class="py-5 text-center text-muted">Carregando...</div>
+
+  <div class="table-responsive" *ngIf="!isLoading">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>Titulo</th>
+          <th>Cor</th>
+          <th class="text-end">Acoes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of filteredCategories">
+          <td class="fw-semibold">{{ category.title }}</td>
+          <td>
+            <span
+              class="badge rounded-pill"
+              [ngStyle]="{
+                backgroundColor: category.color + '20',
+                color: category.color,
+                border: '1px solid ' + category.color + '40'
+              }"
+            >
+              {{ category.color }}
+            </span>
+          </td>
+          <td class="text-end text-muted">CRUD a portar</td>
+        </tr>
+        <tr *ngIf="filteredCategories.length === 0">
+          <td colspan="3" class="text-center text-muted py-4">Nenhuma categoria encontrada.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+

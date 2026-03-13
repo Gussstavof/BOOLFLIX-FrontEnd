@@ -1,5 +1,5 @@
-export interface PageableModel {
-  content: any[];
+export interface PageableModel<T = any> {
+  content: T[];
   first: boolean;
   last: boolean;
   number: number;

@@ -1,0 +1,49 @@
+.bf-panel {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+}
+
+.filter-wrap {
+  position: sticky;
+  top: 1rem;
+  z-index: 2;
+}
+
+.search-input::placeholder {
+  color: #95a2c5;
+}
+
+.search-input:focus {
+  box-shadow: none;
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+.chip-row {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.chip {
+  flex: 0 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.03);
+  color: #111827;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+.chip.is-active {
+  border-color: rgba(37, 99, 235, 0.7);
+  background: rgba(37, 99, 235, 0.12);
+}
+

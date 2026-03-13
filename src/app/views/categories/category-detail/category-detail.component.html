@@ -1,0 +1,37 @@
+<section class="detail-shell" *ngIf="category; else loadingOrMissing">
+  <div class="d-flex flex-column gap-2 mb-4">
+    <h1 class="h4 m-0">{{ category.title }}</h1>
+    <span
+      class="badge rounded-pill w-fit"
+      [ngStyle]="{
+        backgroundColor: category.color + '20',
+        color: category.color,
+        border: '1px solid ' + category.color + '40'
+      }"
+    >
+      {{ category.color }}
+    </span>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center text-muted py-5">Carregando videos...</div>
+
+  <div class="videos-grid" *ngIf="!isLoading">
+    <a class="video-card card" *ngFor="let video of videos" [routerLink]="['/video', video.id]">
+      <div class="card-body">
+        <div class="fw-semibold">{{ video.title }}</div>
+        <div class="text-muted small mt-1">{{ video.description }}</div>
+      </div>
+    </a>
+
+    <div *ngIf="videos.length === 0" class="text-center text-muted py-5">
+      Nenhum video nesta categoria.
+    </div>
+  </div>
+</section>
+
+<ng-template #loadingOrMissing>
+  <section class="detail-shell text-center text-muted py-5">
+    {{ isLoading ? 'Carregando categoria...' : 'Categoria nao encontrada.' }}
+  </section>
+</ng-template>
+

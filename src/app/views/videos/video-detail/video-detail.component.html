@@ -1,0 +1,42 @@
+<section class="detail-shell" *ngIf="video; else loadingOrMissing">
+  <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+    <button class="btn btn-link p-0" type="button" (click)="back()">Voltar</button>
+  </div>
+
+  <div class="ratio ratio-16x9 rounded overflow-hidden border bg-dark">
+    <iframe
+      *ngIf="safeEmbedUrl"
+      [src]="safeEmbedUrl"
+      title="Video"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <div class="card mt-3">
+    <div class="card-body">
+      <div class="d-flex flex-column gap-2">
+        <h1 class="h4 m-0">{{ video.title }}</h1>
+        <a
+          class="badge rounded-pill text-decoration-none w-fit"
+          [routerLink]="['/category', video.category?.id]"
+          [ngStyle]="{
+            backgroundColor: (video.category?.color || '#2563eb') + '20',
+            color: video.category?.color || '#2563eb',
+            border: '1px solid ' + (video.category?.color || '#2563eb') + '40'
+          }"
+        >
+          {{ video.category?.title }}
+        </a>
+        <p class="text-muted m-0">{{ video.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #loadingOrMissing>
+  <section class="detail-shell text-center text-muted py-5">
+    {{ isLoading ? 'Carregando video...' : 'Video nao encontrado.' }}
+  </section>
+</ng-template>
+

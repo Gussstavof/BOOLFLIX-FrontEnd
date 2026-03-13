@@ -1,37 +1,38 @@
-import {Component} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {AuthService} from "../../../services/auth/auth.service";
-import {Route, Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      void this.router.navigateByUrl('/');
+    }
+  }
+
   signupForm: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
+    username: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3)] }),
+    email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6)] })
   });
 
   onSubmit() {
-    let form: any = this.signupForm.value;
+    if (this.signupForm.invalid) return;
 
-    this.authService.createSignup({
-      username: form.username,
-      email: form.email,
-      password: form.password
-    }).subscribe(async res => {
-      console.log(res)
-      if (res.status === 201 && res.body) {
-        sessionStorage.setItem('token', res.body.token);
-        await this.router.navigateByUrl('home');
+    const form = this.signupForm.getRawValue();
+    this.authService.signup({ username: form.username, email: form.email, password: form.password }).subscribe(async (res) => {
+      if (res.status === 201 && res.body?.token) {
+        await this.router.navigateByUrl('/');
       }
     });
   }

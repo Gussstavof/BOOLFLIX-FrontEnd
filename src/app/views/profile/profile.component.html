@@ -1,0 +1,46 @@
+<section class="profile-shell">
+  <div class="d-flex flex-column gap-2 mb-4">
+    <h1 class="h3 m-0">Meu Perfil</h1>
+    <p class="text-muted m-0">Gerencie as informacoes da sua conta e preferencias.</p>
+  </div>
+
+  <div class="card profile-card">
+    <div class="card-body">
+      <div class="d-flex align-items-center gap-3 pb-4 border-bottom">
+        <div class="avatar-lg">{{ authService.getCurrentUser()?.username?.charAt(0)?.toUpperCase() }}</div>
+        <div class="flex-grow-1">
+          <div class="h5 m-0">{{ authService.getCurrentUser()?.username }}</div>
+          <div class="mt-2">
+            <span class="badge rounded-pill" [ngClass]="authService.isAdmin() ? 'bg-warning text-dark' : 'bg-primary'">
+              {{ authService.isAdmin() ? 'Administrador' : 'Usuario' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="py-4 d-flex flex-column gap-3">
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-4 text-muted small">Nome</div>
+          <div class="col-12 col-md-8 fw-semibold">{{ authService.getCurrentUser()?.username }}</div>
+        </div>
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-4 text-muted small">E-mail</div>
+          <div class="col-12 col-md-8 fw-semibold">{{ authService.getCurrentUser()?.email }}</div>
+        </div>
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-4 text-muted small">Nivel de acesso</div>
+          <div class="col-12 col-md-8 fw-semibold">
+            {{ authService.isAdmin() ? 'Acesso total' : 'Acesso de visualizacao' }}
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-3 border-top">
+        <button class="btn btn-danger w-100 w-sm-auto" type="button" (click)="logout()">
+          Encerrar sessao
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+

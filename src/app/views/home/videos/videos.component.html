@@ -1,25 +1,54 @@
-<app-filter (categorySelected)="onChangeCategory($event)"></app-filter>
-<div fxLayout="row wrap" fxLayoutAlign="start center" style="padding: 2%">
-  <div *ngFor="let video of videos" style="margin: 0.5%;">
-    <mat-card class="mat-card-live" fxFlex="0 1 calc(33.3% - 11px)"
-              fxFlex.lt-md="0 1 calc(50% - 11px)"
-              fxFlex.lt-sm="100%">
-
-      <mat-card-title class="mat-card-title-live">
-        <div class="row">
-          <p>
-            <span style="font-size:0.9rem;" fxFlex="70" fxLayoutAlign="start center">{{ video.title }}</span>
-            <span fxFlex></span>
-          </p>
-        </div>
-      </mat-card-title>
-      <mat-card-content fxLayoutAlign="center center">
-        <div>
-          <iframe width="560" height="315" [src]="video.urlSafe" frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen></iframe>
-        </div>
-      </mat-card-content>
-    </mat-card>
+<section class="page-shell pt-4">
+  <div class="d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between mb-3">
+    <div>
+      <h2 class="section-title mb-1">Explorar</h2>
+      <p class="text-muted mb-0">Descubra os melhores conteudos em um so lugar</p>
+    </div>
+    <button class="btn btn-outline-primary" type="button" (click)="load()" [disabled]="isLoading">
+      {{ isLoading ? 'Carregando...' : 'Atualizar' }}
+    </button>
   </div>
-</div>
+
+  <app-filter
+    [categories]="categories"
+    [selectedCategoryId]="selectedCategoryId"
+    (categorySelected)="onCategorySelected($event)"
+    (searchChanged)="onSearchChanged($event)"
+  ></app-filter>
+
+  <div *ngIf="isLoading" class="py-5 text-center text-muted">Carregando videos...</div>
+
+  <div class="videos-grid mt-4" *ngIf="!isLoading">
+    <a class="video-card card" *ngFor="let video of filteredVideos" [routerLink]="['/video', video.id]">
+      <div class="thumb">
+        <img [src]="getThumbnailUrl(video)" [alt]="video.title" loading="lazy" />
+        <div class="thumb-overlay" aria-hidden="true">
+          <span class="play-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"></path>
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-3 d-flex flex-column gap-2">
+        <div class="d-flex align-items-start justify-content-between gap-2">
+          <h3 class="video-title m-0">{{ video.title }}</h3>
+          <span
+            class="badge rounded-pill video-badge"
+            [ngStyle]="getCategoryBadgeStyle(video.category?.id || '')"
+          >
+            {{ video.category?.title || 'Categoria' }}
+          </span>
+        </div>
+
+        <p class="video-desc m-0 text-muted">{{ video.description }}</p>
+      </div>
+    </a>
+
+    <div *ngIf="filteredVideos.length === 0" class="empty-state text-center text-muted p-5">
+      Nenhum video encontrado. Tente outros termos ou limpe os filtros.
+    </div>
+  </div>
+</section>
+
